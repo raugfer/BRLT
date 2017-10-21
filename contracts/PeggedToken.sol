@@ -1,11 +1,11 @@
 // Interface for an extension of the the ERC 20 Token standard
 // that allows for minting and burning coins
 // Inspired by https://github.com/ethereum/EIPs/pull/621
-// Assumes a decentralized custody of assets by external entities
-// Assumes a central authority to control custody priviledges
+// Assumes a decentralized custody of assets by the contract in ETH
+// Assumes a central authority to update the wei/cent market rate
 pragma solidity 0.4.15;
 
-contract ReserveToken
+contract PeggedToken
 {
 	// Copy of the ERC 20 interface
 
@@ -23,18 +23,14 @@ contract ReserveToken
 	event Approval(address indexed _owner, address indexed _spender, uint256 _value);
 
 	// Extended functionality
-
-	// Custodian operations
-	function custodianLimit(address _custodian) public constant returns (uint256 _custodianLimit);
-	function custodianReserve(address _custodian) public constant returns (uint256 _custodianReserve);
-	function mint(address _to, uint256 _value, string _meta) public returns (bool success);
-	function burn(address _from, uint256 _value, string _meta) public returns (bool success);
-	function transferCustody(address _custodian) public returns (bool success);
-	function targetOf(address _custodian) public constant returns (address _targetOf);
+	function mintPrice() public constant returns (uint256 _mintPrice);
+	function burnPrice() public constant returns (uint256 _burnPrice);
+	function mint() payable public returns (bool success);
+	function burn(uint256 _value) public returns (bool success);
 	// Central authority operations
-	function grantCustody(address _custodian, uint256 _limit) public returns (bool success);
+	function updatePrice(uint256 _currentPrice) public returns (bool success);
 	function transferAuthority(address _authority) public returns (bool success);
-	event Mint(address _custodian, address indexed _to, uint256 _value, string _meta);
-	event Burn(address _custodian, address indexed _from, uint256 _value, string _meta);
+	event Mint(address indexed _to, uint256 _value);
+	event Burn(address indexed _from, uint256 _value);
 }
 
