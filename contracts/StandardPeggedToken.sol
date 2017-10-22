@@ -9,9 +9,6 @@ contract StandardPeggedToken is PeggedToken, StandardToken
 	address authority;
 	uint256 currentPrice;
 
-	event Mint(address indexed _to, uint256 _value);
-	event Burn(address indexed _from, uint256 _value);
-
 	function PeggedToken() public
 	{
 		authority = msg.sender;
