@@ -26,7 +26,8 @@ contract StandardPeggedToken is PeggedToken, StandardToken
 		if (supply > 0)
 		{
 			uint256 _reservePrice = this.balance / supply;
-			if (_reservePrice < currentPrice) return _reservePrice;
+			require(_reservePrice >= currentPrice);			// forbid if low reserve
+			if (_reservePrice < currentPrice) return _reservePrice;	// actual price if low reserve
 		}
 		return currentPrice;
 	}
