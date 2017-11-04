@@ -26,7 +26,7 @@ contract StandardReserveToken is ReserveToken, StandardToken
 		return reserves[_custodian];
 	}
 
-	function mint(address _to, uint256 _value, string _meta) public returns (bool success)
+	function mint(address _to, uint256 _value, string _meta) public returns (bool _success)
 	{
 		address _owner = msg.sender;
 		require(supply + _value > supply);
@@ -41,7 +41,7 @@ contract StandardReserveToken is ReserveToken, StandardToken
 		return true;
 	}
 
-	function burn(address _from, uint256 _value, string _meta) public returns (bool success)
+	function burn(address _from, uint256 _value, string _meta) public returns (bool _success)
 	{
 		address _owner = msg.sender;
 		require(_value > 0);
@@ -56,7 +56,7 @@ contract StandardReserveToken is ReserveToken, StandardToken
 		return true;
 	}
 
-	function transferCustody(address _custodian) public returns (bool success)
+	function transferCustody(address _custodian) public returns (bool _success)
 	{
 		address _owner = msg.sender;
 		require(_custodian != 0);
@@ -76,7 +76,7 @@ contract StandardReserveToken is ReserveToken, StandardToken
 		return _custodian;
 	}
 
-	function grantCustody(address _custodian, uint256 _limit) public returns (bool success)
+	function grantCustody(address _custodian, uint256 _limit) public returns (bool _success)
 	{
 		address _owner = msg.sender;
 		require(_owner == authority);
@@ -86,7 +86,7 @@ contract StandardReserveToken is ReserveToken, StandardToken
 		return true;
 	}
 
-	function transferAuthority(address _authority) public returns (bool success)
+	function transferAuthority(address _authority) public returns (bool _success)
 	{
 		address _owner = msg.sender;
 		require(_owner == authority);

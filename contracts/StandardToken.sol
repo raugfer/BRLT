@@ -14,12 +14,12 @@ contract StandardToken is Token
 		return supply;
 	}
 
-	function balanceOf(address _owner) public constant returns (uint256 balance)
+	function balanceOf(address _owner) public constant returns (uint256 _balance)
 	{
 		return balances[_owner];
 	}
 
-	function transfer(address _to, uint256 _value) public returns (bool success)
+	function transfer(address _to, uint256 _value) public returns (bool _success)
 	{
 		address _from = msg.sender;
 		require(_value > 0);
@@ -31,7 +31,7 @@ contract StandardToken is Token
 		return true;
 	}
 
-	function transferFrom(address _from, address _to, uint256 _value) public returns (bool success)
+	function transferFrom(address _from, address _to, uint256 _value) public returns (bool _success)
 	{
 		address _spender = msg.sender;
 		require(_value > 0);
@@ -45,7 +45,7 @@ contract StandardToken is Token
 		return true;
 	}
 
-	function approve(address _spender, uint256 _value) public returns (bool success)
+	function approve(address _spender, uint256 _value) public returns (bool _success)
 	{
 		address _owner = msg.sender;
 		allowed[_owner][_spender] = _value;
@@ -53,7 +53,7 @@ contract StandardToken is Token
 		return true;
 	}
 
-	function allowance(address _owner, address _spender) public constant returns (uint256 remaining)
+	function allowance(address _owner, address _spender) public constant returns (uint256 _remaining)
 	{
 		return allowed[_owner][_spender];
 	}

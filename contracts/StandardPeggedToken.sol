@@ -31,7 +31,7 @@ contract StandardPeggedToken is PeggedToken, StandardToken
 		return currentPrice;
 	}
 
-	function mint() payable public returns (bool success)
+	function mint() payable public returns (bool _success)
 	{
 		address _to = msg.sender;
 		uint256 _amount = msg.value;
@@ -45,7 +45,7 @@ contract StandardPeggedToken is PeggedToken, StandardToken
 		return true;
 	}
 
-	function burn(uint256 _value) public returns (bool success)
+	function burn(uint256 _value) public returns (bool _success)
 	{
 		address _from = msg.sender;
 		require(_value > 0);
@@ -60,7 +60,7 @@ contract StandardPeggedToken is PeggedToken, StandardToken
 		return true;
 	}
 
-	function updatePrice(uint256 _currentPrice) public returns (bool success)
+	function updatePrice(uint256 _currentPrice) public returns (bool _success)
 	{
 		address _owner = msg.sender;
 		require(_owner == authority);
@@ -69,7 +69,7 @@ contract StandardPeggedToken is PeggedToken, StandardToken
 		return true;
 	}
 
-	function transferAuthority(address _authority) public returns (bool success)
+	function transferAuthority(address _authority) public returns (bool _success)
 	{
 		address _owner = msg.sender;
 		require(_owner == authority);
