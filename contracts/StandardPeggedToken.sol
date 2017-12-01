@@ -9,7 +9,7 @@ contract StandardPeggedToken is PeggedToken, StandardToken
 	address authority;
 	uint256 currentPrice;
 
-	function PeggedToken() public
+	function StandardPeggedToken() public
 	{
 		authority = msg.sender;
 	}
