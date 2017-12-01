@@ -220,6 +220,7 @@ contract StandardTokenExchange is TokenExchange
 			_below = _ask;
 			_ask = _order.above;
 		}
+		if (!Token(token).transferFrom(_owner, this, _amount)) revert();
 		_id = serial + 1;
 		serial += types;
 		while (_id == 0 || orders[_id].owner > 0)
