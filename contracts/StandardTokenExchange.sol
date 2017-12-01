@@ -15,6 +15,8 @@ contract StandardTokenExchange is TokenExchange
 		uint32 below;
 	}
 
+	uint8 constant types = 2;
+
 	address token;
 	uint32 asks;
 	uint32 bids;
@@ -180,12 +182,12 @@ contract StandardTokenExchange is TokenExchange
 			_above = _bid;
 			_bid = _order.below;
 		}
-		_id = serial + 1;
-		serial += 2;
-		while (orders[_id].owner > 0)
+		_id = serial;
+		serial += types;
+		while (_id == 0 || orders[_id].owner > 0)
 		{
-			_id = serial + 1;
-			serial += 2;
+			_id = serial;
+			serial += types;
 		}
 		orders[_id] = Order(_above, _owner, _amount, _value, _bid);
 		if (_above > 0) orders[_above].below = _id; else bids = _id;
@@ -218,12 +220,12 @@ contract StandardTokenExchange is TokenExchange
 			_below = _ask;
 			_ask = _order.above;
 		}
-		_id = serial + 2;
-		serial += 2;
+		_id = serial + 1;
+		serial += types;
 		while (_id == 0 || orders[_id].owner > 0)
 		{
-			_id = serial + 2;
-			serial += 2;
+			_id = serial + 1;
+			serial += types;
 		}
 		orders[_id] = Order(_ask, _owner, _amount, _value, _below);
 		if (_ask > 0) orders[_ask].below = _id;
@@ -236,7 +238,7 @@ contract StandardTokenExchange is TokenExchange
 	{
 		address _owner = msg.sender;
 		require(_id > 0);
-		require(_id % 2 == 1);
+		require(_id % types == 0);
 		Order storage _order = orders[_id];
 		require(_order.owner == _owner);
 		if (_order.above > 0) orders[_order.above].below = _order.below; else bids = _order.below;
@@ -251,7 +253,7 @@ contract StandardTokenExchange is TokenExchange
 	{
 		address _owner = msg.sender;
 		require(_id > 0);
-		require(_id % 2 == 0);
+		require(_id % types == 1);
 		Order storage _order = orders[_id];
 		require(_order.owner == _owner);
 		if (_order.above > 0) orders[_order.above].below = _order.below;
