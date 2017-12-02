@@ -5,8 +5,10 @@ contract Exchange
 {
 	function bid(uint32 _depth) public constant returns (uint256 _value, uint256 _amount);
 	function ask(uint32 _depth) public constant returns (uint256 _value, uint256 _amount);
-	function buyQuote(uint256 _value) public constant returns (uint256 _amount);
-	function sellQuote(uint256 _value) public constant returns (uint256 _amount);
+	function quoteBuyGive(uint256 _amount) public constant returns (uint256 _value);
+	function quoteSellTake(uint256 _amount) public constant returns (uint256 _value);
+	function quoteBuyTake(uint256 _value) public constant returns (uint256 _amount);
+	function quoteSellGive(uint256 _value) public constant returns (uint256 _amount);
 	function buy() payable public returns (bool _success);
 	function sell(uint256 _value) public returns (bool _success);
 	function placeBuyOrder(uint256 _value) payable public returns (uint32 _id);

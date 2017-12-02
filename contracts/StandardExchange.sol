@@ -56,7 +56,61 @@ contract StandardExchange is Exchange
 		return (0, 0);
 	}
 
-	function buyQuote(uint256 _value) public constant returns (uint256 _amount)
+	function quoteBuyGive(uint256 _amount) public constant returns (uint256 _value)
+	{
+		require(_amount > 0);
+		_value = 0;
+		uint32 _ask = asks;
+		while (_ask > 0)
+		{
+			Order storage _order = orders[_ask];
+			assert(_order.owner > 0);
+			if (_order.amount > _amount)
+			{
+				assert((_order.value * _amount) / _amount == _order.value);
+				uint256 _prorated_value = (_order.value * _amount) / _order.amount;
+				assert(_value + _prorated_value > _value);
+				_value += _prorated_value;
+				_amount = 0;
+				break;
+			}
+			assert(_value + _order.value > _value);
+			_value += _order.value;
+			_amount -= _order.amount;
+			_ask = _order.above;
+		}
+		require(_amount == 0);
+		return _value;
+	}
+
+	function quoteSellTake(uint256 _amount) public constant returns (uint256 _value)
+	{
+		require(_amount > 0);
+		_value = 0;
+		uint32 _bid = bids;
+		while (_bid > 0)
+		{
+			Order storage _order = orders[_bid];
+			assert(_order.owner > 0);
+			if (_order.amount > _amount)
+			{
+				assert((_order.value * _amount) / _amount == _order.value);
+				uint256 _prorated_value = (_order.value * _amount) / _order.amount;
+				assert(_value + _prorated_value > _value);
+				_value += _prorated_value;
+				_amount = 0;
+				break;
+			}
+			assert(_value + _order.value > _value);
+			_value += _order.value;
+			_amount -= _order.amount;
+			_bid = _order.below;
+		}
+		require(_amount == 0);
+		return _value;
+	}
+
+	function quoteBuyTake(uint256 _value) public constant returns (uint256 _amount)
 	{
 		require(_value > 0);
 		_amount = 0;
@@ -83,7 +137,7 @@ contract StandardExchange is Exchange
 		return _amount;
 	}
 
-	function sellQuote(uint256 _value) public constant returns (uint256 _amount)
+	function quoteSellGive(uint256 _value) public constant returns (uint256 _amount)
 	{
 		require(_value > 0);
 		_amount = 0;
