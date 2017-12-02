@@ -245,6 +245,17 @@ contract StandardExchange is Exchange
 		return _id;
 	}
 
+	function order(uint32 _id) public returns (uint256 _value, uint256 _amount)
+	{
+		address _owner = msg.sender;
+		require(_id > 0);
+		Order storage _order = orders[_id];
+		require(_order.owner == _owner);
+		_value = _order.value;
+		_amount = _order.amount;
+		return (_value, _amount);
+	}
+
 	function cancelBuyOrder(uint32 _id) public returns (bool _success)
 	{
 		address _owner = msg.sender;

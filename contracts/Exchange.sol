@@ -9,6 +9,7 @@ contract Exchange
 	function sell(uint256 _value) public returns (bool _success);
 	function placeBuyOrder(uint256 _value) payable public returns (uint32 _id);
 	function placeSellOrder(uint256 _value, uint256 _amount) public returns (uint32 _id);
+	function order(uint32 _id) public returns (uint256 _value, uint256 _amount);
 	function cancelBuyOrder(uint32 _id) public returns (bool _success);
 	function cancelSellOrder(uint32 _id) public returns (bool _success);
 
