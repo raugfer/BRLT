@@ -245,7 +245,7 @@ contract StandardExchange is Exchange
 		return _id;
 	}
 
-	function order(uint32 _id) public returns (uint256 _value, uint256 _amount)
+	function order(uint32 _id) public constant returns (uint256 _value, uint256 _amount)
 	{
 		address _owner = msg.sender;
 		require(_id > 0);
