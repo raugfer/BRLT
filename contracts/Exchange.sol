@@ -3,6 +3,8 @@ pragma solidity ^0.4.15;
 
 contract Exchange
 {
+	function bid(uint32 _depth) public constant returns (uint256 _value, uint256 _amount);
+	function ask(uint32 _depth) public constant returns (uint256 _value, uint256 _amount);
 	function buyQuote(uint256 _value) public constant returns (uint256 _amount);
 	function sellQuote(uint256 _value) public constant returns (uint256 _amount);
 	function buy() payable public returns (bool _success);

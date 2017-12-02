@@ -28,6 +28,34 @@ contract StandardExchange is Exchange
 		token = _token;
 	}
 
+	function bid(uint32 _depth) public constant returns (uint256 _value, uint256 _amount)
+	{
+		uint32 _bid = bids;
+		while (_bid > 0)
+		{
+			Order storage _order = orders[_bid];
+			assert(_order.owner > 0);
+			if (depth == 0) return (_order.value, _order.amount);
+			_depth--;
+			_bid = _order.below;
+		}
+		return (0, 0);
+	}
+
+	function ask(uint32 _depth) public constant returns (uint256 _value, uint256 _amount)
+	{
+		uint32 _ask = asks;
+		while (_ask > 0)
+		{
+			Order storage _order = orders[_ask];
+			assert(_order.owner > 0);
+			if (depth == 0) return (_order.value, _order.amount);
+			_depth--;
+			_ask = _order.above;
+		}
+		return (0, 0);
+	}
+
 	function buyQuote(uint256 _value) public constant returns (uint256 _amount)
 	{
 		require(_value > 0);
