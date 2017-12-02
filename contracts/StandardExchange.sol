@@ -35,7 +35,7 @@ contract StandardExchange is Exchange
 		{
 			Order storage _order = orders[_bid];
 			assert(_order.owner > 0);
-			if (depth == 0) return (_order.value, _order.amount);
+			if (_depth == 0) return (_order.value, _order.amount);
 			_depth--;
 			_bid = _order.below;
 		}
@@ -49,7 +49,7 @@ contract StandardExchange is Exchange
 		{
 			Order storage _order = orders[_ask];
 			assert(_order.owner > 0);
-			if (depth == 0) return (_order.value, _order.amount);
+			if (_depth == 0) return (_order.value, _order.amount);
 			_depth--;
 			_ask = _order.above;
 		}
