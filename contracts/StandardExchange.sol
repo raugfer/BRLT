@@ -23,8 +23,9 @@ contract StandardExchange is Exchange
 	uint32 sequence;
 	mapping (uint32 => Order) orders;
 
-	function StandardTokenExchange(address _token) public
+	function StandardExchange(address _token) public
 	{
+		require(_token > 0);
 		token = _token;
 	}
 
@@ -168,6 +169,7 @@ contract StandardExchange is Exchange
 	{
 		address _owner = msg.sender;
 		uint256 _amount = msg.value;
+		require(_amount > 0);
 		uint32 _ask = asks;
 		while (_ask > 0)
 		{
@@ -252,6 +254,7 @@ contract StandardExchange is Exchange
 	{
 		address _owner = msg.sender;
 		uint256 _amount = msg.value;
+		require(_amount > 0);
 		require(_value > 0);
 		if (asks > 0)
 		{
