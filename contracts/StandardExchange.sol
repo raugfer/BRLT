@@ -205,9 +205,7 @@ contract StandardExchange is Exchange
 					assert(_order.value > _value);
 					_order.amount -= _amount;
 					_order.value -= _value;
-					_order.owner.transfer(_amount);
-					if (_value > 0) require(Token(token).transfer(_owner, _value));
-					Buy(_owner, _order.owner, _value, _amount, _ask, false);
+					require(performBuy(_owner, _order.owner, _value, _amount, _ask, false));
 					_amount = 0;
 				}
 				break;
@@ -217,9 +215,7 @@ contract StandardExchange is Exchange
 			uint256 _order_value = _order.value;
 			uint256 _order_amount = _order.amount;
 			delete orders[_ask];
-			_order.owner.transfer(_order_amount);
-			require(Token(token).transfer(_owner, _order_value));
-			Buy(_owner, _order_owner, _order_value, _order_amount, _ask, true);
+			require(performBuy(_owner, _order_owner, _order_value, _order_amount, _ask, true));
 			_amount -= _order_amount;
 			_ask = asks;
 		}
@@ -246,9 +242,7 @@ contract StandardExchange is Exchange
 					assert(_order.amount > _amount);
 					_order.amount -= _amount;
 					_order.value -= _value;
-					if (_amount > 0) _owner.transfer(_amount);
-					require(Token(token).transferFrom(_owner, _order.owner, _value));
-					Sell(_owner, _order.owner, _value, _amount, _bid, false);
+					require(performSell(_order.owner, _owner, _value, _amount, _bid, false));
 					_value = 0;
 				}
 				break;
@@ -258,13 +252,27 @@ contract StandardExchange is Exchange
 			uint256 _order_value = _order.value;
 			uint256 _order_amount = _order.amount;
 			delete orders[_bid];
-			_owner.transfer(_order_amount);
-			require(Token(token).transferFrom(_owner, _order_owner, _order_value));
-			Sell(_owner, _order_owner, _order_value, _order_amount, _bid, true);
+			require(performSell(_order_owner, _owner, _order_value, _order_amount, _bid, true));
 			_value -= _order_value;
 			_bid = bids;
 		}
 		require(_value == 0);	// TODO fix limitation
+		return true;
+	}
+
+	function performBuy(address _buyer, address _seller, uint256 _value, uint256 _amount, uint32 _id, bool _complete) internal returns (bool _success)
+	{
+		if (_amount > 0) _seller.transfer(_amount);
+		if (_value > 0) require(Token(token).transfer(_buyer, _value));
+		Buy(_buyer, _seller, _value, _amount, _id, _complete);
+		return true;
+	}
+
+	function performSell(address _buyer, address _seller, uint256 _value, uint256 _amount, uint32 _id, bool _complete) internal returns (bool _success)
+	{
+		if (_amount > 0) _seller.transfer(_amount);
+		if (_value > 0) require(Token(token).transferFrom(_seller, _buyer, _value));
+		Sell(_buyer, _seller, _value, _amount, _id, _complete);
 		return true;
 	}
 
