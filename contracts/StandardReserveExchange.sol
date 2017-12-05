@@ -49,7 +49,6 @@ contract StandardReserveExchange is ReserveExchange, StandardExchange
 
 	function placeBurnOrder(uint256 _profit) payable public returns (uint32 _id)
 	{
-		address _owner = msg.sender;
 		uint256 _amount = msg.value;
 		require(_amount > 0);
 		require(_profit > 0);
@@ -61,7 +60,7 @@ contract StandardReserveExchange is ReserveExchange, StandardExchange
 		require(_balance > 0);
 		assert((_supply * _burn_amount) / _burn_amount == _supply);
 		uint256 _value = (_supply * _burn_amount) / _balance;
-		_id = placeBuyOrder.value(_amount)(_value);
+		_id = this.placeBuyOrder.value(_amount)(_value);
 		assert(amounts[_id] == 0);
 		amounts[_id] = _burn_amount;
 		return _id;
