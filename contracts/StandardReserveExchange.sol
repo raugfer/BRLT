@@ -23,11 +23,11 @@
 // extended with the capacity of minting and burning
 pragma solidity ^0.4.15;
 
-import "./TetherToken.sol";
-import "./TetherExchange.sol";
+import "./ReserveToken.sol";
+import "./ReserveExchange.sol";
 import "./StandardExchange.sol";
 
-contract StandardTetherExchange is TetherExchange, StandardExchange
+contract StandardReserveExchange is ReserveExchange, StandardExchange
 {
 	mapping (uint32 => uint256) amounts;
 
@@ -40,7 +40,7 @@ contract StandardTetherExchange is TetherExchange, StandardExchange
 		assert(_amount + _profit > _amount);
 		uint256 _sell_amount = _amount + _profit;
 		uint256 _value = quoteBuyGive(_amount);
-		require(TetherToken(token).mint.value(_amount)(_owner, _value));
+		require(ReserveToken(token).mint.value(_amount)(_owner, _value));
 		_id = placeSellOrder(_value, _sell_amount);
 		assert(amounts[_id] == 0);
 		amounts[_id] = _amount;
@@ -55,7 +55,7 @@ contract StandardTetherExchange is TetherExchange, StandardExchange
 		require(_profit > 0);
 		assert(_amount + _profit > _amount);
 		uint256 _burn_amount = _amount + _profit;
-		uint256 _supply = TetherToken(token).totalSupply();
+		uint256 _supply = ReserveToken(token).totalSupply();
 		uint256 _balance = token.balance;
 		require(_balance > 0);
 		assert((_supply * _burn_amount) / _burn_amount == _supply);
@@ -79,7 +79,7 @@ contract StandardTetherExchange is TetherExchange, StandardExchange
 		{
 			uint256 _burn_amount = amounts[_id];
 			delete amounts[_id];
-			if (_burn_amount > 0) require(TetherToken(token).burn(this, _value, _burn_amount));
+			if (_burn_amount > 0) require(ReserveToken(token).burn(this, _value, _burn_amount));
 		}
 		require(super.performSell(_buyer, _seller, _value, _amount, _id, _complete));
 		return true;
@@ -99,7 +99,7 @@ contract StandardTetherExchange is TetherExchange, StandardExchange
 		uint256 _amount = amounts[_id];
 		delete amounts[_id];
 		require(super.cancelSellOrder(_id));
-		if (_amount > 0) require(TetherToken(token).burn(_owner, _value, _amount));
+		if (_amount > 0) require(ReserveToken(token).burn(_owner, _value, _amount));
 		return true;
 	}
 }

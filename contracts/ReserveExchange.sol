@@ -25,7 +25,7 @@ pragma solidity ^0.4.15;
 
 import "./Exchange.sol"
 
-contract TetherExchange is Exchange
+contract ReserveExchange is Exchange
 {
 	function placeMintOrder(uint256 _profit) payable public returns (uint32 _id);
 	function placeBurnOrder(uint256 _profit) payable public returns (uint32 _id);
