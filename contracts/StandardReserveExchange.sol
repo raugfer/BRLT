@@ -44,7 +44,7 @@ contract StandardReserveExchange is ReserveExchange, StandardExchange
 		require(_profit > 0);
 		assert(_amount + _profit > _amount);
 		uint256 _sell_amount = _amount + _profit;
-		uint256 _value = quoteBuyGive(_amount);
+		uint256 _value = quoteSellTake(_amount);
 		require(ReserveToken(token).mint.value(_amount)(_owner, _value));
 		_id = placeSellOrder(_value, _sell_amount);
 		assert(amounts[_id] == 0);
