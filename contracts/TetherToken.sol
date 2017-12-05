@@ -19,26 +19,19 @@
  *
  */
 
-// Concrete instance of the StandardTetherToken: the BRLT
+// Interface for an extension of the the ERC 20 Token standard
+// that allows for minting and burning coins
+// Inspired by https://github.com/ethereum/EIPs/pull/621
+// Assumes the custody of assets by the contract in ETH
 pragma solidity 0.4.15;
 
-import "./StandardTetherToken.sol";
+import "./Token.sol";
 
-contract BRLT is StandardReserveToken
+contract TetherToken is Token
 {
-	function name() public constant returns (string _name)
-	{
-		return "Brazilian Real Token";
-	}
-
-	function symbol() public constant returns (string _symbol)
-	{
-		return "BRLT";
-	}
-
-	function decimals() public constant returns (uint8 _decimals)
-	{
-		return 2;
-	}
+	function mint(address _to, uint256 _value) payable public returns (bool _success);
+	function burn(address _from, uint256 _value, uint256 _amount) public returns (bool _success);
+	event Mint(address indexed _to, uint256 _value, uint256 _amount);
+	event Burn(address indexed _from, uint256 _value, uint256 _amount);
 }
 

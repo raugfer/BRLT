@@ -19,26 +19,15 @@
  *
  */
 
-// Concrete instance of the StandardTetherToken: the BRLT
-pragma solidity 0.4.15;
+// Interface for a simple ERC 20 Token exchange
+// extended with the capacity of minting and burning
+pragma solidity ^0.4.15;
 
-import "./StandardTetherToken.sol";
+import "./Exchange.sol"
 
-contract BRLT is StandardReserveToken
+contract TetherExchange is Exchange
 {
-	function name() public constant returns (string _name)
-	{
-		return "Brazilian Real Token";
-	}
-
-	function symbol() public constant returns (string _symbol)
-	{
-		return "BRLT";
-	}
-
-	function decimals() public constant returns (uint8 _decimals)
-	{
-		return 2;
-	}
+	function placeMintOrder(uint256 _profit) payable public returns (uint32 _id);
+	function placeBurnOrder(uint256 _profit) payable public returns (uint32 _id);
 }
 
