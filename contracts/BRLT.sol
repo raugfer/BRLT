@@ -22,7 +22,7 @@
 // Concrete instance of the StandardTetherToken: the BRLT
 pragma solidity 0.4.15;
 
-import "./StandardTetherToken.sol";
+import "./StandardReserveToken.sol";
 
 contract BRLT is StandardReserveToken
 {
