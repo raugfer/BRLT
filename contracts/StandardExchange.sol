@@ -19,7 +19,7 @@
  *
  */
 
-// Standard implementation of a simple ERC 20 Token exchange
+// Standard implementation of a simple decentralized ERC 20 Token exchange
 pragma solidity ^0.4.15;
 
 import "./Token.sol";
