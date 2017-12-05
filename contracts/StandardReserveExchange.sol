@@ -31,6 +31,11 @@ contract StandardReserveExchange is ReserveExchange, StandardExchange
 {
 	mapping (uint32 => uint256) amounts;
 
+	function StandardReserveExchange(address _token) public
+		StandardExchange(_token)
+	{
+	}
+
 	function placeMintOrder(uint256 _profit) payable public returns (uint32 _id)
 	{
 		address _owner = msg.sender;
