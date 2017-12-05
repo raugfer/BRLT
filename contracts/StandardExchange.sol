@@ -57,6 +57,8 @@ contract StandardExchange is Exchange
 		{
 			Order storage _order = orders[_bid];
 			assert(_order.owner > 0);
+			assert(_order.value > 0);
+			assert(_order.amount > 0);
 			if (_depth == 0) return (_order.value, _order.amount);
 			_depth--;
 			_bid = _order.below;
@@ -71,6 +73,8 @@ contract StandardExchange is Exchange
 		{
 			Order storage _order = orders[_ask];
 			assert(_order.owner > 0);
+			assert(_order.value > 0);
+			assert(_order.amount > 0);
 			if (_depth == 0) return (_order.value, _order.amount);
 			_depth--;
 			_ask = _order.above;
@@ -86,6 +90,8 @@ contract StandardExchange is Exchange
 		{
 			Order storage _order = orders[_ask];
 			assert(_order.owner > 0);
+			assert(_order.value > 0);
+			assert(_order.amount > 0);
 			if (_order.amount > _amount)
 			{
 				if (_amount > 0)
@@ -118,6 +124,8 @@ contract StandardExchange is Exchange
 		{
 			Order storage _order = orders[_bid];
 			assert(_order.owner > 0);
+			assert(_order.value > 0);
+			assert(_order.amount > 0);
 			if (_order.amount > _amount)
 			{
 				if (_amount > 0)
@@ -150,6 +158,8 @@ contract StandardExchange is Exchange
 		{
 			Order storage _order = orders[_ask];
 			assert(_order.owner > 0);
+			assert(_order.value > 0);
+			assert(_order.amount > 0);
 			if (_order.value > _value)
 			{
 				if (_value > 0)
@@ -182,6 +192,8 @@ contract StandardExchange is Exchange
 		{
 			Order storage _order = orders[_bid];
 			assert(_order.owner > 0);
+			assert(_order.value > 0);
+			assert(_order.amount > 0);
 			if (_order.value > _value)
 			{
 				if (_value > 0)
@@ -216,6 +228,8 @@ contract StandardExchange is Exchange
 		{
 			Order storage _order = orders[_ask];
 			assert(_order.owner > 0);
+			assert(_order.value > 0);
+			assert(_order.amount > 0);
 			if (_order.amount > _amount)
 			{
 				_order.below = 0;
@@ -240,7 +254,7 @@ contract StandardExchange is Exchange
 			_amount -= _order_amount;
 			_ask = asks;
 		}
-		require(_amount == 0);	// TODO fix limitation
+		require(_amount == 0);	// TODO fix limitation, supports taker-only
 		return true;
 	}
 
@@ -253,6 +267,8 @@ contract StandardExchange is Exchange
 		{
 			Order storage _order = orders[_bid];
 			assert(_order.owner > 0);
+			assert(_order.value > 0);
+			assert(_order.amount > 0);
 			if (_order.value > _value)
 			{
 				_order.above = 0;
@@ -277,7 +293,7 @@ contract StandardExchange is Exchange
 			_value -= _order_value;
 			_bid = bids;
 		}
-		require(_value == 0);	// TODO fix limitation
+		require(_value == 0);	// TODO fix limitation, supports taker-only
 		return true;
 	}
 
@@ -307,9 +323,11 @@ contract StandardExchange is Exchange
 		{
 			Order storage _order = orders[asks];
 			assert(_order.owner > 0);
+			assert(_order.value > 0);
+			assert(_order.amount > 0);
 			assert((_order.amount * _value) / _value == _order.amount);
 			assert((_amount * _order.value) / _order.value == _amount);
-			require(_order.amount * _value > _amount * _order.value);	// TODO fix limitation
+			require(_order.amount * _value > _amount * _order.value);	// TODO fix limitation, supports taker-only
 		}
 		uint32 _above = 0;
 		uint32 _below = bids;
@@ -317,6 +335,8 @@ contract StandardExchange is Exchange
 		{
 			_order = orders[_below];
 			assert(_order.owner > 0);
+			assert(_order.value > 0);
+			assert(_order.amount > 0);
 			assert((_order.amount * _value) / _value == _order.amount);
 			assert((_amount * _order.value) / _order.value == _amount);
 			if (_order.amount * _value < _amount * _order.value) break;
@@ -346,9 +366,11 @@ contract StandardExchange is Exchange
 		{
 			Order storage _order = orders[bids];
 			assert(_order.owner > 0);
+			assert(_order.value > 0);
+			assert(_order.amount > 0);
 			assert((_order.amount * _value) / _value == _order.amount);
 			assert((_amount * _order.value) / _order.value == _amount);
-			require(_order.amount * _value < _amount * _order.value);	// TODO fix limitation
+			require(_order.amount * _value < _amount * _order.value);	// TODO fix limitation, supports taker-only
 		}
 		uint32 _below = 0;
 		uint32 _above = asks;
@@ -356,6 +378,8 @@ contract StandardExchange is Exchange
 		{
 			_order = orders[_above];
 			assert(_order.owner > 0);
+			assert(_order.value > 0);
+			assert(_order.amount > 0);
 			assert((_order.amount * _value) / _value == _order.amount);
 			assert((_amount * _order.value) / _order.value == _amount);
 			if (_order.amount * _value > _amount * _order.value) break;
@@ -382,6 +406,9 @@ contract StandardExchange is Exchange
 		address _owner = msg.sender;
 		require(_id > 0);
 		Order storage _order = orders[_id];
+		assert(_order.owner > 0);
+		assert(_order.value > 0);
+		assert(_order.amount > 0);
 		require(_order.owner == _owner);
 		_value = _order.value;
 		_amount = _order.amount;
@@ -394,6 +421,9 @@ contract StandardExchange is Exchange
 		require(_id > 0);
 		require(_id % types == 0);
 		Order storage _order = orders[_id];
+		assert(_order.owner > 0);
+		assert(_order.value > 0);
+		assert(_order.amount > 0);
 		require(_order.owner == _owner);
 		uint256 _value = _order.value;
 		uint256 _amount = _order.amount;
@@ -411,6 +441,9 @@ contract StandardExchange is Exchange
 		require(_id > 0);
 		require(_id % types == 1);
 		Order storage _order = orders[_id];
+		assert(_order.owner > 0);
+		assert(_order.value > 0);
+		assert(_order.amount > 0);
 		require(_order.owner == _owner);
 		uint256 _value = _order.value;
 		uint256 _amount = _order.amount;
