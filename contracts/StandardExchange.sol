@@ -327,7 +327,7 @@ contract StandardExchange is Exchange
 			assert(_order.amount > 0);
 			assert((_order.amount * _value) / _value == _order.amount);
 			assert((_amount * _order.value) / _order.value == _amount);
-			require(_order.amount * _value > _amount * _order.value);	// TODO fix limitation, supports taker-only
+			require(_order.amount * _value > _amount * _order.value);	// TODO fix limitation, supports maker-only
 		}
 		uint32 _above = 0;
 		uint32 _below = bids;
@@ -370,7 +370,7 @@ contract StandardExchange is Exchange
 			assert(_order.amount > 0);
 			assert((_order.amount * _value) / _value == _order.amount);
 			assert((_amount * _order.value) / _order.value == _amount);
-			require(_order.amount * _value < _amount * _order.value);	// TODO fix limitation, supports taker-only
+			require(_order.amount * _value < _amount * _order.value);	// TODO fix limitation, supports maker-only
 		}
 		uint32 _below = 0;
 		uint32 _above = asks;
