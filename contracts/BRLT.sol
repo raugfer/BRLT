@@ -19,7 +19,7 @@
  *
  */
 
-// Concrete instance of the StandardTetherToken: the BRLT
+// Concrete instance of the StandardReserveToken: the BRLT
 pragma solidity 0.4.15;
 
 import "./StandardReserveToken.sol";

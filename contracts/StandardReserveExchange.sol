@@ -55,8 +55,9 @@ contract StandardReserveExchange is ReserveExchange, StandardExchange
 		require(_profit > 0);
 		assert(_amount + _profit > _amount);
 		uint256 _burn_amount = _amount + _profit;
-		uint256 _supply = ReserveToken(token).totalSupply();
-		uint256 _balance = token.balance;
+		uint256 _supply;
+		uint256 _balance;
+		(_supply, _balance) = ReserveToken(token).rate();
 		require(_balance > 0);
 		assert((_supply * _burn_amount) / _burn_amount == _supply);
 		uint256 _value = (_supply * _burn_amount) / _balance;

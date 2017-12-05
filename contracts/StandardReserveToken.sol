@@ -19,7 +19,7 @@
  *
  */
 
-// Standard implementation of the TetherToken interface
+// Standard implementation of the ReserveToken interface
 pragma solidity 0.4.15;
 
 import "./ReserveToken.sol";
@@ -34,6 +34,11 @@ contract StandardReserveToken is ReserveToken, StandardToken
 		require(exchange == 0);
 		exchange = _exchange;
 		return true;
+	}
+
+	function rate() public constant returns (uint256 _value, uint256 _amount)
+	{
+		return (supply, this.balance);
 	}
 
 	function mint(address _to, uint256 _value) payable public returns (bool _success)

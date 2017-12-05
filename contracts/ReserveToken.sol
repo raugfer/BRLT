@@ -29,6 +29,7 @@ import "./Token.sol";
 
 contract ReserveToken is Token
 {
+	function rate() public constant returns (uint256 _value, uint256 _amount);
 	function mint(address _to, uint256 _value) payable public returns (bool _success);
 	function burn(address _from, uint256 _value, uint256 _amount) public returns (bool _success);
 	event Mint(address indexed _to, uint256 _value, uint256 _amount);
