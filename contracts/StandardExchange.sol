@@ -415,7 +415,7 @@ contract StandardExchange is Exchange
 		return (_value, _amount);
 	}
 
-	function orders() public constant returns (uint32[] _bids, uint32[] _asks)
+	function openOrders() public constant returns (uint32[] _bids, uint32[] _asks)
 	{
 		address _owner = msg.sender;
 		uint32 _count = 0;
