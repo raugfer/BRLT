@@ -415,6 +415,58 @@ contract StandardExchange is Exchange
 		return (_value, _amount);
 	}
 
+	function orders() public constant returns (uint32[] _bids, uint32[] _asks)
+	{
+		address _owner = msg.sender;
+		uint32 _count = 0;
+		uint32 _bid = bids;
+		while (_bid > 0)
+		{
+			Order storage _order = orders[_bid];
+			assert(_order.owner > 0);
+			assert(_order.value > 0);
+			assert(_order.amount > 0);
+			if (_order.owner == _owner) _count++;
+			_bid = _order.below;
+		}
+		_bids = new uint32[](_count);
+		uint32 _index = 0;
+		_bid = bids;
+		while (_bid > 0)
+		{
+			_order = orders[_bid];
+			assert(_order.owner > 0);
+			assert(_order.value > 0);
+			assert(_order.amount > 0);
+			if (_order.owner == _owner) _bids[_index++] = _bid;
+			_bid = _order.below;
+		}
+		_count = 0;
+		uint32 _ask = asks;
+		while (_ask > 0)
+		{
+			_order = orders[_ask];
+			assert(_order.owner > 0);
+			assert(_order.value > 0);
+			assert(_order.amount > 0);
+			if (_order.owner == _owner) _count++;
+			_ask = _order.above;
+		}
+		_asks = new uint32[](_count);
+		_index = 0;
+		_ask = asks;
+		while (_ask > 0)
+		{
+			_order = orders[_ask];
+			assert(_order.owner > 0);
+			assert(_order.value > 0);
+			assert(_order.amount > 0);
+			if (_order.owner == _owner) _asks[_index++] = _ask;
+			_ask = _order.above;
+		}
+		return (_bids, _asks);
+	}
+
 	function cancelBuyOrder(uint32 _id) public returns (bool _success)
 	{
 		address _owner = msg.sender;
