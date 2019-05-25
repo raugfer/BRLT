@@ -11,7 +11,7 @@ A spot market is composed of the following items:
 
 * A _base asset_ that is being negotiated
 * A _quote asset_ that is used to price the base asset, and also provided in exchange for it
-* A set of traders carrying their own balances in both of there assets
+* A set of traders carrying their own balances in both of these assets
 * An _orderbook_ consisting of a set of orders partitioned in two:
   * _buy orders_ (or _bids_), listed in the _buy side_
   * _sell orders_ (or _asks_), listed in the _sell side_
@@ -90,7 +90,7 @@ either a number of bottles under his possession as a sell order; or an amount
 of cash enough to buy a given number of bottles at the given price as a buy order.
 
 Whenever buy and sell prices match, the buyer and the seller perform the trade
-by exchanging the cash and the goods.
+by exchanging the cash for the goods.
 
 #### Market Freedom and Fairness
 
@@ -104,7 +104,7 @@ We, of course, assume that traders will operate independently and
 that the volume negotiated collectively in the market is significantly larger
 that the volumes available for each trader to operate individually.
 
-The market owner must be unbiased. The orderbook mechanichs, and the custody
+The market owner must be unbiased. The orderbook mechanics, and the custody
 of assets held from passive orders, could make a good case for implementing
 the market owner as a decentralized smart contract.
 
@@ -190,7 +190,7 @@ own buy orders at diferent moments and prices and kept track of the average
 beer bottle price under his possession.
 
 With the reserve in place, the market owner can influence the market in any way
-he desires, buy and selling at strategic times. His only limitation is that,
+he desires, buying and selling at strategic times. His only limitation is that,
 for that, he would have to have enough cash to build the reserve.
 
 Moreover, at all times, the market owner would have to pay close attention to his
