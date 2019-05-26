@@ -20,25 +20,24 @@
  */
 
 // Concrete instance of the StandardReserveToken: the BRLT
-pragma solidity 0.4.15;
+pragma solidity 0.4.17;
 
 import "./StandardReserveToken.sol";
 
 contract BRLT is StandardReserveToken
 {
-	function name() public constant returns (string _name)
+	function name() public view returns (string _name)
 	{
 		return "Brazilian Real Token";
 	}
 
-	function symbol() public constant returns (string _symbol)
+	function symbol() public view returns (string _symbol)
 	{
 		return "BRLT";
 	}
 
-	function decimals() public constant returns (uint8 _decimals)
+	function decimals() public view returns (uint8 _decimals)
 	{
 		return 2;
 	}
 }
-
