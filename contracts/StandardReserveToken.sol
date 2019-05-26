@@ -20,52 +20,53 @@
  */
 
 // Standard implementation of the ReserveToken interface
-pragma solidity 0.4.15;
+pragma solidity 0.4.17;
 
 import "./ReserveToken.sol";
 import "./StandardToken.sol";
 
 contract StandardReserveToken is ReserveToken, StandardToken
 {
-	address exchange;
+	address owner;
 
-	function init(address _exchange) public returns (bool _success)
+	function init(address _owner) public returns (bool _success)
 	{
-		require(exchange == 0);
-		exchange = _exchange;
+		require(owner == 0);
+		owner = _owner;
 		return true;
 	}
 
-	function rate() public constant returns (uint256 _value, uint256 _amount)
+	function rate() public view returns (uint256 _value, uint256 _amount)
 	{
 		return (supply, this.balance);
 	}
 
-	function mint(address _to, uint256 _value) payable public returns (bool _success)
+	function mint(address _to, uint256 _value) public payable returns (bool _success)
 	{
-		require(msg.sender == exchange);
+		address _from = msg.sender;
 		uint256 _amount = msg.value;
+		require(_from == owner);
 		require(_amount > 0);
 		require(supply + _value > supply);
 		assert(balances[_to] + _value > balances[_to]);
 		supply += _value;
 		balances[_to] += _value;
-		Mint(_to, _value, _amount);
+		Mint(_from, _to, _amount, _value);
 		return true;
 	}
 
-	function burn(address _from, uint256 _value, uint256 _amount) public returns (bool _success)
+	function burn(address _to, uint256 _value, uint256 _amount) public returns (bool _success)
 	{
-		require(msg.sender == exchange);
+		address _from = msg.sender;
+		require(_from == owner);
 		require(_value > 0);
 		require(_amount > 0);
 		require(balances[_from] >= _value);
 		assert(supply >= _value);
 		balances[_from] -= _value;
 		supply -= _value;
-		_from.transfer(_amount);
-		Burn(_from, _value, _amount);
+		_to.transfer(_amount);
+		Burn(_from, _to, _value, _amount);
 		return true;
 	}
 }
-
