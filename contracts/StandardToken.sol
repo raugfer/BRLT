@@ -20,7 +20,7 @@
  */
 
 // Standard implementation of the ERC20 token
-pragma solidity 0.4.15;
+pragma solidity 0.4.17;
 
 import "./Token.sol";
 
@@ -30,12 +30,12 @@ contract StandardToken is Token
 	mapping (address => uint256) balances;
 	mapping (address => mapping (address => uint256)) allowed;
 
-	function totalSupply() public constant returns (uint256 _totalSupply)
+	function totalSupply() public view returns (uint256 _totalSupply)
 	{
 		return supply;
 	}
 
-	function balanceOf(address _owner) public constant returns (uint256 _balance)
+	function balanceOf(address _owner) public view returns (uint256 _balance)
 	{
 		return balances[_owner];
 	}
@@ -69,14 +69,14 @@ contract StandardToken is Token
 	function approve(address _spender, uint256 _value) public returns (bool _success)
 	{
 		address _owner = msg.sender;
+		require(_value > 0);
 		allowed[_owner][_spender] = _value;
 		Approval(_owner, _spender, _value);
 		return true;
 	}
 
-	function allowance(address _owner, address _spender) public constant returns (uint256 _remaining)
+	function allowance(address _owner, address _spender) public view returns (uint256 _remaining)
 	{
 		return allowed[_owner][_spender];
 	}
 }
-
