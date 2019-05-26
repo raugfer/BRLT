@@ -26,17 +26,17 @@ import "./StandardReserveToken.sol";
 
 contract BRLT is StandardReserveToken
 {
-	function name() public view returns (string _name)
+	function name() public pure returns (string _name)
 	{
 		return "Brazilian Real Token";
 	}
 
-	function symbol() public view returns (string _symbol)
+	function symbol() public pure returns (string _symbol)
 	{
 		return "BRLT";
 	}
 
-	function decimals() public view returns (uint8 _decimals)
+	function decimals() public pure returns (uint8 _decimals)
 	{
 		return 2;
 	}
