@@ -20,7 +20,7 @@
  */
 
 // Interface for the ERC 20 Token standard
-// https://github.com/ethereum/EIPs/issues/20
+// https://eips.ethereum.org/EIPS/eip-20
 pragma solidity 0.4.17;
 
 contract Token
