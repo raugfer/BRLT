@@ -84,7 +84,7 @@ contract StandardReserveExchange is ReserveExchange, StandardExchange
 		{
 			uint256 _burn_amount = amounts[_id];
 			delete amounts[_id];
-			if (_burn_amount > 0) require(ReserveToken(token).burn(this, _value, _burn_amount));
+			if (_burn_amount > 0) require(ReserveToken(token).burn(this, _value, _burn_amount)); // TODO fix potential bug
 		}
 		require(super.performSell(_buyer, _seller, _value, _amount, _id, _complete));
 		return true;
