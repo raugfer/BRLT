@@ -69,7 +69,7 @@ contract StandardToken is Token
 	function approve(address _spender, uint256 _value) public returns (bool _success)
 	{
 		address _owner = msg.sender;
-		require(_value > 0);
+		require(_value >= 0);
 		allowed[_owner][_spender] = _value;
 		Approval(_owner, _spender, _value);
 		return true;
