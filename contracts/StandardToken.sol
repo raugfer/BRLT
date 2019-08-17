@@ -42,6 +42,7 @@ contract StandardToken is Token
 
 	function transfer(address _to, uint256 _value) public returns (bool _success)
 	{
+		require(msg.data.length >= 68); // fix for short address attack
 		address _from = msg.sender;
 		require(_value > 0);
 		require(balances[_from] >= _value);
